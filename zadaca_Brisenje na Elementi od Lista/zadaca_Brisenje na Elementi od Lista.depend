@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1589049051 source:d:\c++ proekti\projekti od cas\zadaca_brisenje na elementi od lista\main.cpp
+	<iostream>
+	<list>
+

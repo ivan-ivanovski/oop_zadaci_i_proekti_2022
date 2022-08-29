@@ -1,0 +1,4 @@
+Zdravo.
+Ovoj dokument e primer za otvaranje na dokument vo Cpp
+i prikazuvanje na tekst od dokument vo terminal.
+

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1589052119 source:d:\c++ proekti\projekti od cas\zadaca 4 vektrori prefrluvanje na broevi\main.cpp
+	<iostream>
+	<deque>
+	<vector>
+

@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1641857034 source:d:\programiranje\c++\rabota_so_txt_dokumenti\zadaca_pisuvanje\main.cpp
+	<iostream>
+	<fstream>
+	<cstring>
+	<stdlib.h>
+	<cstdlib>
+

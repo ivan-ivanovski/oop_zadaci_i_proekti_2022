@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1641853346 source:d:\programiranje\c++\rabota_so_txt_dokumenti\zadaca_voved\main.cpp
+	<iostream>
+	<fstream>
+	<cstring>
+
