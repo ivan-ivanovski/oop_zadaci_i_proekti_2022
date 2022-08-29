@@ -1,0 +1,214 @@
+#include<iostream>
+#include<cstring>
+#include<string.h>
+using namespace std;
+
+enum Tip{
+    LINUX=0, UNIXS, WINDOWS
+};
+
+class OperativenSistem{
+    char *imeOperativeSistem;
+    float verzijaOperativenSistem;
+    Tip tip;
+    float goleminaOperativeSistemGB;
+    void copyOS(const OperativenSistem &os){
+        this->imeOperativeSistem = new char[strlen(os.imeOperativeSistem)+1];
+        strcpy(this->imeOperativeSistem, os.imeOperativeSistem);
+        this->verzijaOperativenSistem = os.verzijaOperativenSistem;
+        this->tip = os.tip;
+        this->goleminaOperativeSistemGB = os.goleminaOperativeSistemGB;
+    }
+public:
+    OperativenSistem(char *imeOperativeSistem="", float verzijaOperativenSistem=0.0,Tip tip=LINUX, float goleminaOperativeSistemGB=0.0){
+        this->imeOperativeSistem = new char[strlen(imeOperativeSistem)+1];
+        strcpy(this->imeOperativeSistem, imeOperativeSistem);
+        this->verzijaOperativenSistem = verzijaOperativenSistem;
+        this->tip = tip;
+        this->goleminaOperativeSistemGB = goleminaOperativeSistemGB;
+    }
+
+    OperativenSistem(const OperativenSistem& os){
+        copyOS(os);
+    }
+
+    OperativenSistem &operator =(const OperativenSistem& os){
+        if(this!=&os){
+            delete[] imeOperativeSistem;
+            copyOS(os);
+        }
+        return *this;
+    }
+
+    //Dali se ednakvi
+    bool ednakviSe(const OperativenSistem &os){
+        bool isti = false;
+        if(strcmp(this->imeOperativeSistem, os.imeOperativeSistem) != 1){
+            if(this->verzijaOperativenSistem == os.verzijaOperativenSistem){
+                if(this->tip == os.tip){
+                    if(this->goleminaOperativeSistemGB == goleminaOperativeSistemGB){
+                        isti = true;
+                    }
+                    else
+                        isti = false;
+                }
+                else isti=false;
+            }
+            else
+                isti = false;
+        }
+        else
+            isti = false;
+        return isti;
+    }
+    //sporedba spored verzii
+    int sporediVerzija(const OperativenSistem &os){
+        if(this->verzijaOperativenSistem < os.verzijaOperativenSistem){
+            return -1;
+        }
+        else if(this->verzijaOperativenSistem == os.verzijaOperativenSistem){
+            return 0;
+        }
+        else
+            return 1;
+    }
+    //sporedba ista familija
+    bool istaFamilija(const OperativenSistem &sporedba){
+        if(this->tip == sporedba.tip){
+            if(strcmp(this->imeOperativeSistem, sporedba.imeOperativeSistem) != 1){
+                return 1;
+            }
+        }
+        else{
+            return 0;
+        }
+    }
+
+    void setVerzijaOs(float verzijaOperativenSistem){
+        this->verzijaOperativenSistem = verzijaOperativenSistem;
+    }
+    float getVerzijaOs(){
+        return verzijaOperativenSistem;
+    }
+    void pecati(){
+        cout<<"Ime: "<<imeOperativeSistem<<" Verzija: "<<verzijaOperativenSistem<<" Tip: "<<tip<< " Golemina:"<<goleminaOperativeSistemGB<<"GB"<<endl;
+    }
+
+    ~OperativenSistem(){
+        delete[] imeOperativeSistem;
+    }
+};
+class Repozitorium{
+    char imePerozitorium[20];
+    OperativenSistem *operativniSistemi;
+    int n;
+    void copyRepo(const Repozitorium &repo){
+        strcpy(this->imePerozitorium, repo.imePerozitorium);
+        this->n = repo.n;
+        this->operativniSistemi = new OperativenSistem[n];
+        for(int i=0;i<n;i++){
+            operativniSistemi[i] = repo.operativniSistemi[i];
+        }
+    }
+public:
+    Repozitorium(char *imePerozitorium=""){
+        strcpy(this->imePerozitorium, imePerozitorium);
+        n = 0;
+        operativniSistemi = new OperativenSistem[0];
+    }
+
+    Repozitorium(const Repozitorium& repo){
+        copyRepo(repo);
+    }
+
+    Repozitorium&operator =(const Repozitorium& r){
+        if(this!=&r){
+            delete[] operativniSistemi;
+            copyRepo(r);
+        }
+        return *this;
+    }
+
+    void dodadi(const OperativenSistem& os){
+        if(postoiSistem(os)){
+            return ;
+        }
+        OperativenSistem *osTemp = new OperativenSistem[n+1];
+        for(int i=0;i<n;i++){
+            osTemp[i] = operativniSistemi[i];
+        }
+        osTemp[n++] = os;
+        delete [] operativniSistemi;
+        operativniSistemi = osTemp;
+
+
+    }
+
+    bool postoiSistem(const OperativenSistem &os){
+        bool postoi = false;
+        for(int i=0;i<n;i++){
+            if(operativniSistemi[i].istaFamilija(os)){
+                postoi = false;
+            }
+        }
+        return postoi;
+    }
+    void izbrishi(const OperativenSistem &os){
+        if(postoiSistem(os)){
+            OperativenSistem *temp = new OperativenSistem[n-1];
+            for(int i=0,j=0;i<n;i++){
+                if(operativniSistemi[i].ednakviSe(os)){
+                    temp[j++]=operativniSistemi[i];
+                }
+            }
+            n--;
+            delete[] operativniSistemi;
+            operativniSistemi = temp;
+        }
+
+    }
+
+    void pecatiOperativniSistemi(){
+        cout<<"Repozitorium: "<<imePerozitorium<<endl;
+        for(int i=0;i<n;i++){
+            operativniSistemi[i].pecati();
+        }
+    }
+
+    ~Repozitorium(){
+        delete[] operativniSistemi;
+    }
+};
+int main() {
+    char repoName[20];
+    cin>>repoName;
+    Repozitorium repozitorium=Repozitorium(repoName);
+    int brojOperativniSistemi = 0;
+    cin>>brojOperativniSistemi;
+    char ime[20];
+    float verzija;
+    int tip;
+    float golemina;
+    for (int i = 0; i<brojOperativniSistemi; i++){
+        cin>>ime;
+        cin>>verzija;
+        cin>>tip;
+        cin>>golemina;
+        OperativenSistem os = OperativenSistem(ime, verzija, (Tip)tip, golemina);
+        repozitorium.dodadi(os);
+    }
+
+    repozitorium.pecatiOperativniSistemi();
+    cin>>ime;
+    cin>>verzija;
+    cin>>tip;
+    cin>>golemina;
+    OperativenSistem os = OperativenSistem(ime, verzija, (Tip)tip, golemina);
+    cout<<"=====Brishenje na operativen sistem====="<<endl;
+    repozitorium.izbrishi(os);
+    repozitorium.pecatiOperativniSistemi();
+    return 0;
+}
+
+
+

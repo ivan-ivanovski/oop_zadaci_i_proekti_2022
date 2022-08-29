@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1661639089 source:d:\programiranje\c_c++-2022\objektno programiranje\proekat_operativensistem\main.cpp
+	<iostream>
+	<cstring>
+	<string.h>
+

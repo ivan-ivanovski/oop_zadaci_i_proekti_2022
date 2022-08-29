@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1661289540 source:d:\programiranje\c_c++-2022\objektno programiranje\proekat_iznajmuvanjefilm\main.cpp
+	<iostream>
+	<cstring>
+	<vector>
+
